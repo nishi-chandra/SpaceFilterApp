@@ -1,0 +1,102 @@
+<!doctype html>
+
+<body>
+    <header><h1>SpaceX Launch Programs</h1></header>
+    <div id="main">
+        
+
+            
+        <article>
+            <div *ngIf="loading" class="spinner">
+           
+                <i class="fa fa-spinner fa-spin" style="width:200px;height:200px;font-size:50px;"></i>
+            
+        </div>
+            <div class="row">
+                <div class="column" *ngFor="let data of httpdata">
+                    <div class="image"><img src='{{data.links.mission_patch}}'></div>
+                   
+                    <div class="row">
+                        <div class="column col-bold">{{data.mission_name}} #{{data.flight_number}}</div>
+                      
+                    </div>
+                    <div class="bld">Mission Ids:
+                        <ul *ngFor="let msId of data.mission_id" style="margin:0">
+                            <li class="col-thin" style="padding:0;margin:0">{{msId}}</li>
+                            
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="column bld">Launch Year:
+                            <span class="column col-thin" style="padding:0;margin:0">{{data.launch_year}}</span>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="column bld">Successfull Launch:
+                            <span class="column col-thin" style="padding:0;margin:0">{{data.launch_success}}</span>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="column bld">Successfull Landing:
+                            <span class="column col-thin" style="padding:0;margin:0">{{data.rocket.first_stage.cores[0].land_success}}</span>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+        </article>
+            
+        <aside>
+            <div class="heading"><h3>Filters</h3></div>
+            <div class="launch_year">
+            <div class="sub-heading">Launch Year</div>
+            <div class="row">
+                <div class="column" *ngFor="let year of filterYear;let yearIndex=index">
+                    <button routerLinkActive="active" class="yearBtn"  (click)="filterOnYear(year,yearIndex,'yearBtn')">
+                        <a routerLink="/" [queryParams] = "{limit:limit,launch_year: year}">{{year}}</a>
+                            
+                        </button>
+                </div>
+            </div>
+            
+                                    </div>
+
+                                        <div class="successful_launch">
+                                        <div class="sub-heading">Successful Launch</div>
+                                        <div class="row">
+                                            <div class="column" *ngFor="let status of success;let statusIndex=index">
+                                                <button routerLinkActive="active" class="launchBtn"  (click)="filterLaunchSuccess(status,statusIndex,'launchBtn')">
+                                                    <a routerLink="/" [queryParams] = "{limit:limit,launch_success:status}">{{status | titlecase}}</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="successful_landing">
+                                        <div class="sub-heading">Successful Landing</div>
+                                        <div class="row">
+                                            <div class="column" *ngFor="let status of success;let landSuccess = index">
+                                                <button routerLinkActive="active"  class="landBtn" (click)="filterLandSuccess(status,landSuccess,'landBtn')">
+                                                    <a routerLink="/" [queryParams] = "{limit:limit,launch_success:launch_success,land_success:status}">{{status | titlecase}}</a>
+                                                    </button>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+        </aside>
+           
+    
+    </div>
+    <!-- <footer><b>Developed by:</b>{{developer_name}}</footer> -->
+    <footer>
+        <div class="footer-row">
+            <div class="column bld">Developed by : </div>
+            <div class="column col-thin">{{developer_name}}</div>
+        </div>
+    </footer>
+</body>
+
